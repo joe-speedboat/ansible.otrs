@@ -1,0 +1,8 @@
+# otrs_mariadb.cnf
+[mysqld]
+max_allowed_packet = 64M
+query_cache_size = 32M
+innodb_log_file_size = 256M
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+symbolic-links=0

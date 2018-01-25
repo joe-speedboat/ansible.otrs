@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Chris Ruettimann
+  company: Bitbull
+  description: otrs installation and configuration
+  min_ansible_version: 2.2
+  license: GPL
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  categories:
+  - ticketing
+  - web
+
+dependencies: []

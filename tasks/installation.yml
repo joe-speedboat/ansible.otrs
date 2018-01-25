@@ -1,0 +1,88 @@
+---
+# install.yml file for joe-speedboat.nextcloud
+
+- name: install database
+  block:
+  - name: remove all the binlogs
+    shell: rm -f /var/lib/mysql/ib_logfile?
+
+  - name: Install MariaDB role and setup
+    include_role:
+      name: joe-speedboat.mariadb
+    vars:
+      mariadb_secure_installation: yes
+      mariadb_databases:
+        - name: '{{ mariadb_db_name }}'
+          collation: utf8_general_ci
+          encoding: utf8
+      mariadb_users_create:
+        - name: '{{ mariadb_db_user }}'
+          hosts:
+          - '{{ mariadb_db_host }}'
+          password: "{{ mariadb_user_password }}"
+          privs:
+          - "{{ mariadb_db_name }}.*:ALL"
+          append_privs: no
+
+  - name: configure/verify mariadb server settings
+    copy:
+      src: otrs_mariadb.cnf
+      dest: /etc/my.cnf.d/
+      owner: root
+      group: root
+      mode: 0644
+    register: mariadb_settings
+
+  - name: cleanup binlogs if server settings have changed
+    block:
+    - name: stop mariadb
+      service:
+        name: mariadb
+        state: stopped
+    - name: remove all the binlogs
+      shell: rm -f /var/lib/mysql/ib_logfile?
+    - name: start mariadb
+      service:
+        name: mariadb
+        state: started
+    when: mariadb_settings.changed == true
+  when: otrs_skip_db == false
+
+- name: install otrs packages
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - epel-release
+    - openssl
+    - mod_perl 
+    - "{{ otrs_rpm_url }}"
+    - "perl(Crypt::Eksblowfish::Bcrypt)" 
+    - "perl(JSON::XS)" 
+    - "perl(GD::Text)" 
+    - "perl(Encode::HanExtra)" 
+    - "perl(GD::Graph)" 
+    - "perl(Mail::IMAPClient)" 
+    - "perl(PDF::API2)" 
+    - "perl(Text::CSV_XS)" 
+    - "perl(YAML::XS)"
+    - "perl(DBD::Pg)"
+    - "perl(Authen::NTLM)"
+    - perl-DBD-ODBC
+  notify: restart httpd
+
+- name: enable otrs cron 
+  become_user: otrs
+  shell: /opt/otrs/bin/Cron.sh restart
+  notify: restart crond
+
+- name: enable services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - httpd
+
+- debug:
+    msg: "To setup otrs, visit: http://{{ ansible_fqdn }}/otrs/installer.pl"
+
