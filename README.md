@@ -15,7 +15,7 @@ check defaults/main.yml
 
 Dependencies
 ------------
-None so far.
+* role: joe-speedboat.mariadb if db install is selected.
 
 Example Playbook
 ----------------
