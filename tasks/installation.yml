@@ -1,11 +1,7 @@
 ---
 # install.yml file for joe-speedboat.nextcloud
-
 - name: install database
   block:
-  - name: remove all the binlogs
-    shell: rm -f /var/lib/mysql/ib_logfile?
-
   - name: Install MariaDB role and setup
     include_role:
       name: joe-speedboat.mariadb
@@ -23,29 +19,6 @@
           privs:
           - "{{ mariadb_db_name }}.*:ALL"
           append_privs: no
-
-  - name: configure/verify mariadb server settings
-    copy:
-      src: otrs_mariadb.cnf
-      dest: /etc/my.cnf.d/
-      owner: root
-      group: root
-      mode: 0644
-    register: mariadb_settings
-
-  - name: cleanup binlogs if server settings have changed
-    block:
-    - name: stop mariadb
-      service:
-        name: mariadb
-        state: stopped
-    - name: remove all the binlogs
-      shell: rm -f /var/lib/mysql/ib_logfile?
-    - name: start mariadb
-      service:
-        name: mariadb
-        state: started
-    when: mariadb_settings.changed == true
   when: otrs_skip_db == false
 
 - name: install otrs packages

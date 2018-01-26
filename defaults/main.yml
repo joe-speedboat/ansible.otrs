@@ -1,8 +1,6 @@
 ---
 # defaults file for joe-speedboat.otrs
-
 otrs_rpm_url: http://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.4-03.noarch.rpm
-#otrs_fqdn: "{{ansible_fqdn}}"
 
 # do not install and configure database
 otrs_skip_db: false
@@ -13,4 +11,11 @@ mariadb_db_name: 'otrs'
 mariadb_db_user: 'otrs'
 mariadb_root_password: 'p0st1tNOT'
 mariadb_user_password: '.0trs.'
+mariadb_mysqld_config:
+  - max_allowed_packet=64M
+  - query_cache_size=32M
+  - innodb_log_file_size=256M
+  - datadir=/var/lib/mysql
+  - socket=/var/lib/mysql/mysql.sock
+  - symbolic-links=0
 
