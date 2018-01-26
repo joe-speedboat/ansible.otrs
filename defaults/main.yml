@@ -11,7 +11,7 @@ mariadb_db_name: 'otrs'
 mariadb_db_user: 'otrs'
 mariadb_root_password: 'p0st1tNOT'
 mariadb_user_password: '.0trs.'
-mariadb_mysqld_config:
+mariadb_mysqld_config_otrs:
   - max_allowed_packet=64M
   - query_cache_size=32M
   - innodb_log_file_size=256M

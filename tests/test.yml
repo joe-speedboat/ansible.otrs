@@ -4,6 +4,7 @@
   roles:
     - joe-speedboat.otrs
   tasks:
+  # - debug: var=mariadb_mysqld_config
   - name: install firewalld
     yum:
       name: firewalld

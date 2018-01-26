@@ -19,6 +19,7 @@
           privs:
           - "{{ mariadb_db_name }}.*:ALL"
           append_privs: no
+      mariadb_mysqld_config: "{{ mariadb_mysqld_config_otrs }}"
   when: otrs_skip_db == false
 
 - name: install otrs packages
