@@ -1,0 +1,90 @@
+
+sqlcmd -S localhost -U SA -P 'RedHat123'
+
+DROP DATABASE otrs
+SELECT Name from sys.Databases
+GO
+
+RESTORE DATABASE otrs
+FROM DISK = '/opt/backup/otrs_backup_2018_01_26_094657_0095660.bak'
+WITH MOVE 'otrs' TO '/var/opt/mssql/data/otrs.mdf',
+MOVE 'otrs_Log' TO '/var/opt/mssql/data/otrs.ldf'
+GO
+
+--- RESTORE DATABASE successfully processed 2475438 pages in 572.019 seconds (33.808 MB/sec).
+
+- install otrs 3.3.9
+- setup with mysql
+- root@localhost HIEIZjaHzSRZukyg
+- dump mysql database
+- purge mysql database
+- modify config.pm to use mssql
+
+/etc/odbc.ini
+------
+[mssql1]
+Description=Microsoft ODBC Driver 13 for SQL Server
+Server   = tcp:localhost,1433
+Database = otrs
+Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.1.so.9.2
+UsageCount=1
+------
+
+Config.pm
+------
+package Kernel::Config;
+
+#use strict;
+use warnings;
+use utf8;
+
+sub Load {
+    my $Self = shift;
+
+    # ---------------------------------------------------- #
+    # database settings                                    #
+    # ---------------------------------------------------- #
+    $Self->{DatabaseHost} = 'localhost';
+    $Self->{SQLServer} = 'mssql3';
+    $Self->{Database} = 'otrs';
+    $Self->{DatabaseUser} = 'SA';
+    $Self->{DatabasePw} = 'RedHat123';
+    #$Self->{DatabaseDSN} = "DBI:ODBC:driver={SQLServer};Server=$Self->{DatabaseHost},1433;database=$Self->{Database}";
+    $Self->{DatabaseDSN} = "DBI:ODBC:mssql1";
+    $Self->{Database::Type} = 'mssql';
+
+    # ---------------------------------------------------- #
+    # fs root directory
+    # ---------------------------------------------------- #
+    $Self->{Home} = '/opt/otrs';
+}
+
+# ---------------------------------------------------- #
+# needed system stuff (don't edit this)                #
+# ---------------------------------------------------- #
+use base qw(Kernel::Config::Defaults);
+1;
+------
+
+
+sqlcmd -S localhost -U SA -P 'RedHat123'
+
+USE otrs
+GO
+SELECT Name from sys.Databases
+GO
+
+# set password: password123
+update users set pw='$1$i/JtbBz.$uVSs3lLrCena4L4PZbguk1' where (login)  like 'root@localhost'
+GO
+SELECT valid_id, login, pw FROM users WHERE ID='1'
+GO
+QUIT
+
+
+USE otrs
+GO
+SELECT * FROM information_schema.tables
+GO
+
+

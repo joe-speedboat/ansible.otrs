@@ -1,0 +1,36 @@
+- update/cleanup packages
+  - uninstall faq
+  - uninstall survey
+- otrs clonedb in sysconfig 
+- stop services
+  stemctl stop crond postfix httpd
+  systemctl disable crond postfix httpd
+  su - otrs -c 'bin/Cron.sh stop'
+  su - otrs -c 'bin/otrs.Scheduler.pl -a stop'
+
+- prep mssql DB
+  USE otrs
+  GO
+  DROP PROCEDURE dbo.sp_alterdiagram
+  DROP PROCEDURE dbo.sp_creatediagram
+  DROP PROCEDURE dbo.sp_dropdiagram
+  DROP PROCEDURE dbo.sp_helpdiagramdefinition
+  DROP PROCEDURE dbo.sp_renamediagram
+  DROP PROCEDURE dbo.sp_upgraddiagrams
+  DROP PROCEDURE dbo.sp_helpdiagrams
+  DROP FUNCTION dbo.fn_diagramobjects
+  DROP TABLE dbo.sysdiagrams
+  GO
+
+- prep mysql DB
+  DROP DATABASE otrs;
+  CREATE DATABASE otrs CHARACTER SET utf8 COLLATE utf8_general_ci;
+- dry convert
+  systemctl restart mariadb
+  su - otrs
+  # dry run: 15min
+  bin/otrs.CloneDB.pl -n
+- convert db
+  bin/otrs.CloneDB.pl -r
+
+

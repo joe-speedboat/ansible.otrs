@@ -2,7 +2,7 @@
 # upgrade-3.3.9-4.sh
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-4.0.28-01.noarch.rpm"
 
-sed -i 's|:/opt/otrs:/bin/false$|:/opt/otrs:/bin/bash|' /etc/passwd
+usermod -s /bin/bash otrs
 
 systemctl stop crond postfix httpd
 systemctl disable crond postfix httpd
@@ -35,4 +35,4 @@ read -p "Hit ENTER when OK"
 su - otrs -c 'cd /opt/otrs ; /opt/otrs/bin/Cron.sh start'
 su - otrs -c 'cd /opt/otrs ; bin/otrs.RebuildTicketIndex.pl'
 
-sed -i 's|:/opt/otrs:/bin/bash$|:/opt/otrs:/bin/false|' /etc/passwd
+usermod -s /bin/false otrs

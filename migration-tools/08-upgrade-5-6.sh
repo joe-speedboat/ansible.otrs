@@ -1,7 +1,7 @@
 #!/bin/bash
 # upgrade-5-6.sh
 
-sed -i 's|:/opt/otrs:/bin/false$|:/opt/otrs:/bin/bash|' /etc/passwd
+usermod -s /bin/bash otrs
 
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.4-03.noarch.rpm"
 systemctl stop crond postfix httpd
@@ -30,4 +30,4 @@ su - otrs -c 'cd /opt/otrs ; /opt/otrs/bin/otrs.Daemon.pl start'
 su - otrs -c 'cd /opt/otrs ; /opt/otrs/bin/Cron.sh start'
 
 
-sed -i 's|:/opt/otrs:/bin/bash$|:/opt/otrs:/bin/false|' /etc/passwd
+usermod -s /bin/false otrs
