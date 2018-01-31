@@ -1,12 +1,32 @@
+
+usermod -s /bin/bash otrs
+
+
 - update/cleanup packages
   - uninstall faq
   - uninstall survey
-- otrs clonedb in sysconfig 
+  - reinstall support
+  - reinstall clonedb 1.0.14
+  - install faq
+
+  - fill clonedb settings
+    only section CloneDB::TargetDBSettings 
+  
 - stop services
   stemctl stop crond postfix httpd
   systemctl disable crond postfix httpd
   su - otrs -c 'bin/Cron.sh stop'
   su - otrs -c 'bin/otrs.Scheduler.pl -a stop'
+
+- shutdown vm
+  snapshot vm
+  boot up vm
+  
+- verify services
+  crond stopped
+  httpd stopped
+  mssql started
+  mariadb started
 
 - prep mssql DB
   USE otrs
@@ -30,7 +50,51 @@
   su - otrs
   # dry run: 15min
   bin/otrs.CloneDB.pl -n
-- convert db
+- convert db: 1049min
   bin/otrs.CloneDB.pl -r
+
+- disable mssql
+  systemctl stop mssql-server
+  systemctl disable mssql-server
+
+vi /opt/otrs/Kernel/Config.pm
+------
+package Kernel::Config;
+
+#use strict;
+use warnings;
+use utf8;
+
+sub Load {
+    my $Self = shift;
+
+    # ---------------------------------------------------- #
+    # database settings                                    #
+    # ---------------------------------------------------- #
+    $Self->{DatabaseHost} = '127.0.0.1';
+    $Self->{Database} = 'otrs';
+    $Self->{DatabaseUser} = 'otrs';
+    # The password of database user. You also can use bin/otrs.CryptPassword.pl
+    $Self->{DatabasePw} = '.0trs.';
+    $Self->{DatabaseDSN} = "DBI:mysql:database=$Self->{Database};host=$Self->{DatabaseHost};";
+
+    # ---------------------------------------------------- #
+    # fs root directory
+    # ---------------------------------------------------- #
+    $Self->{Home} = '/opt/otrs';
+}
+
+# ---------------------------------------------------- #
+# needed system stuff (don't edit this)                #
+# ---------------------------------------------------- #
+use base qw(Kernel::Config::Defaults);
+1;
+------
+
+
+- start and test
+  systemctl restart crond httpd
+  su - otrs -c 'bin/Cron.sh start'
+  su - otrs -c 'bin/otrs.Scheduler.pl -a start'
 
 

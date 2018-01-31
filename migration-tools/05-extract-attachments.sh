@@ -2,9 +2,17 @@
 In Sysconfig, Search ArticleStorage
    Change to: ArticleStorageFS
 
+- stop otrs
+  systemctl stop crond httpd
+  su - otrs -c 'bin/Cron.sh stop'
+  su - otrs -c 'bin/otrs.Scheduler.pl -a stop'
+
 
 su - otrs
-  otrs.ArticleStorageSwitch.pl -s ArticleStorageDB -d ArticleStorageFS
-  KVM, 4CPU, 4GB Mem, MSSQL Linux, OTRS 3.3.9: ca. 6 h
+  bin/otrs.ArticleStorageSwitch.pl -s ArticleStorageDB -d ArticleStorageFS
+  # ca 6h (mssql)
+
+- shrink DB
+  
 
 

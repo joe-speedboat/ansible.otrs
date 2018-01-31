@@ -15,6 +15,7 @@ mariadb_mysqld_config_otrs:
   - max_allowed_packet=64M
   - query_cache_size=32M
   - innodb_log_file_size=256M
+  - innodb_file_per_table=1
   - datadir=/var/lib/mysql
   - socket=/var/lib/mysql/mysql.sock
   - symbolic-links=0

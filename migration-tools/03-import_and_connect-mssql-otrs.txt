@@ -1,4 +1,7 @@
 
+
+usermod -s /bin/bash otrs
+
 sqlcmd -S localhost -U SA -P 'RedHat123'
 
 DROP DATABASE otrs
