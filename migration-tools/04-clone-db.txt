@@ -1,4 +1,6 @@
 
+screen -S upgrade
+
 usermod -s /bin/bash otrs
 
 

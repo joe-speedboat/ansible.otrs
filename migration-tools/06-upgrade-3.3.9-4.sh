@@ -1,6 +1,9 @@
 #!/bin/bash
+
 # upgrade-3.3.9-4.sh
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-4.0.28-01.noarch.rpm"
+
+screen -S upgrade
 
 usermod -s /bin/bash otrs
 
@@ -15,15 +18,19 @@ su - otrs -c "bin/otrs.CheckDB.pl"
 cat scripts/DBUpdate-to-4.mysql.sql | mysql -f -u root otrs
 
 su - otrs -c 'cd /opt/otrs ; scripts/DBUpdate-to-4.pl'
-su - otrs -c 'cd /opt/otrs ; bin/otrs.RebuildConfig.pl'
-su - otrs -c 'cd /opt/otrs ; bin/otrs.DeleteCache.pl'
+# su - otrs -c 'cd /opt/otrs ; bin/otrs.RebuildConfig.pl'
+# su - otrs -c 'cd /opt/otrs ; bin/otrs.DeleteCache.pl'
 
 systemctl start crond postfix httpd
 systemctl enable crond postfix httpd
 
+
 read -p "Check the installed packages in OTRS:
          Step 9: Check installed packages
 	 Step 11: Check GenericAgent jobs
+
+	 CAUTION: UNINSTALL FAQ + DB-Clone PACKAGE !!!
+	 http://doc.otrs.com/doc/manual/admin/4.0/en/html/upgrading.html
          
          Hit ENTER when done
          "
