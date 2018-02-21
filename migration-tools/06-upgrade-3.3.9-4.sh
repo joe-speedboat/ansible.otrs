@@ -5,6 +5,20 @@ otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-4.0.28-01.noarch.rp
 
 screen -S upgrade
 
+
+
+systemctl stop crond postfix httpd
+systemctl disable crond postfix httpd
+
+cd /opt/otrs
+tar vxfz /root/Kernel_v3.tar.gz
+chown otrs.apache Kernel/ Kernel/Config.pm Kernel/Config/ Kernel/Config/Files/ Kernel/Config/Files/ZZZAAuto.pm Kernel/Config/Files/ZZZACL.pm Kernel/Config/Files/ZZZAuto.pm
+
+systemctl start crond postfix httpd
+# test otrs and Dynamic Fields
+systemctl stop crond postfix httpd
+
+
 usermod -s /bin/bash otrs
 
 systemctl stop crond postfix httpd
