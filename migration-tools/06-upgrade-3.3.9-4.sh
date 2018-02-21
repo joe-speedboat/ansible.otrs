@@ -10,12 +10,20 @@ screen -S upgrade
 systemctl stop crond postfix httpd
 systemctl disable crond postfix httpd
 
+
 cd /opt/otrs
 tar vxfz /root/Kernel_v3.tar.gz
 chown otrs.apache Kernel/ Kernel/Config.pm Kernel/Config/ Kernel/Config/Files/ Kernel/Config/Files/ZZZAAuto.pm Kernel/Config/Files/ZZZACL.pm Kernel/Config/Files/ZZZAuto.pm
+chmod 775 Kernel/ Kernel/Config/ Kernel/Config/Files/
+chmod 664 Kernel/Config.pm Kernel/Config/Files/ZZZAAuto.pm Kernel/Config/Files/ZZZACL.pm Kernel/Config/Files/ZZZAuto.pm
+
 
 systemctl start crond postfix httpd
 # test otrs and Dynamic Fields
+#*********************************************************
+#	 CAUTION: UNINSTALL FAQ + DB-Clone PACKAGE !!!
+#                 Re Install Support Module
+#*********************************************************
 systemctl stop crond postfix httpd
 
 
@@ -32,11 +40,8 @@ su - otrs -c "bin/otrs.CheckDB.pl"
 cat scripts/DBUpdate-to-4.mysql.sql | mysql -f -u root otrs
 
 su - otrs -c 'cd /opt/otrs ; scripts/DBUpdate-to-4.pl'
-# su - otrs -c 'cd /opt/otrs ; bin/otrs.RebuildConfig.pl'
-# su - otrs -c 'cd /opt/otrs ; bin/otrs.DeleteCache.pl'
 
-systemctl start crond postfix httpd
-systemctl enable crond postfix httpd
+systemctl start crond httpd
 
 
 read -p "Check the installed packages in OTRS:
@@ -44,6 +49,7 @@ read -p "Check the installed packages in OTRS:
 	 Step 11: Check GenericAgent jobs
 
 	 CAUTION: UNINSTALL FAQ + DB-Clone PACKAGE !!!
+
 	 http://doc.otrs.com/doc/manual/admin/4.0/en/html/upgrading.html
          
          Hit ENTER when done
