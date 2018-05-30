@@ -15,7 +15,7 @@ usermod -s /bin/bash otrs
     only section CloneDB::TargetDBSettings 
   
 - stop services
-  stemctl stop crond postfix httpd
+  systemctl stop crond postfix httpd
   systemctl disable crond postfix httpd
   su - otrs -c 'bin/Cron.sh stop'
   su - otrs -c 'bin/otrs.Scheduler.pl -a stop'

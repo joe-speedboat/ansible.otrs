@@ -37,6 +37,7 @@ su - otrs -c 'bin/otrs.Scheduler.pl -a stop'
 yum -y install "$otrs_rpm_url"
 
 su - otrs -c "bin/otrs.CheckDB.pl"
+cd /opt/otrs
 cat scripts/DBUpdate-to-4.mysql.sql | mysql -f -u root otrs
 
 su - otrs -c 'cd /opt/otrs ; scripts/DBUpdate-to-4.pl'

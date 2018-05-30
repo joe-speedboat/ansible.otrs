@@ -1,6 +1,8 @@
 
 screen -S upgrade
 
+yum -y install msodbcsql
+
 usermod -s /bin/bash otrs
 
 sqlcmd -S localhost -U SA -P 'RedHat123'

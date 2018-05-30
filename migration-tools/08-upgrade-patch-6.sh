@@ -1,5 +1,9 @@
-#!/bin/bash
-# upgrade-5-6.sh
+# 08-upgrade-patch-6.sh
+
+# https://doc.otrs.com/doc/manual/admin/6.0/en/html/updating.html
+
+[root@otrs1 ~]# rpm -qa | grep otrs
+otrs-6.0.5-01.noarch
 
 screen -S upgrade
 
@@ -8,6 +12,8 @@ usermod -s /bin/bash otrs
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.4-03.noarch.rpm"
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.5-01.noarch.rpm"
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.6-01.noarch.rpm"
+otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.7-01.noarch.rpm"
+
 systemctl stop crond postfix httpd
 systemctl disable crond postfix httpd
 su - otrs -c 'cd /opt/otrs ; bin/Cron.sh stop'
