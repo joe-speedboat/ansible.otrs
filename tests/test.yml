@@ -3,4 +3,9 @@
   become: yes
   roles: 
     - role: role_under_test
+  pre_tasks:
+  - name: install role dep joe-speedboat.mariadb
+    shell: ansible-galaxy install -p ./roles joe-speedboat.mariadb
+    changed_when: False
+
 ...
