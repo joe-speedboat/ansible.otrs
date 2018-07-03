@@ -1,32 +1,6 @@
 ---
-- hosts: vm05
+- hosts: all
   become: yes
-  roles:
-    - joe-speedboat.otrs
-  tasks:
-  # - debug: var=mariadb_mysqld_config
-  - name: install firewalld
-    yum:
-      name: firewalld
-      state: present
-  - name: start firewalld
-    service:
-      name: firewalld
-      enabled: yes
-      state: started
-  - name: open http port on firewalld
-    firewalld:
-      service: http
-      permanent: true
-      state: enabled
-  - name: open https port on firewalld
-    firewalld:
-      service: https
-      permanent: true
-      state: enabled
-  - name: enable firewalld
-    service:
-      name: firewalld
-      enabled: yes
-      state: restarted
+  roles: 
+    - role: role_under_test
 ...
