@@ -1,5 +1,5 @@
 ---
-# handlers file for joe-speedboat.otrs
+# handlers file for joe_speedboat.otrs
 
 - name: restart httpd
   service:
