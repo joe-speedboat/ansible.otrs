@@ -15,7 +15,7 @@ check defaults/main.yml
 
 Dependencies
 ------------
-* role: joe_speedboat.mariadb if db install is selected.
+* role: joe_speedboat.ansible_mariadb if db install is selected.
 
 Example Playbook
 ----------------

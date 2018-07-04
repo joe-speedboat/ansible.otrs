@@ -2,7 +2,7 @@
 - hosts: vm05
   become: yes
   roles:
-    - joe_speedboat.otrs
+    - joe_speedboat.ansible_otrs
   vars:
     otrs_rpm_url: https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-4.0.28-01.noarch.rpm
   tasks:

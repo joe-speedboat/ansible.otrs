@@ -4,8 +4,8 @@
   roles: 
     - role: role_under_test
   pre_tasks:
-  - name: install role dep joe_speedboat.mariadb
-    shell: ansible-galaxy install -p ./roles joe_speedboat.mariadb
+  - name: install role dep joe_speedboat.ansible_mariadb
+    shell: ansible-galaxy install -p ./roles joe_speedboat.ansible_mariadb
     changed_when: False
 
 ...

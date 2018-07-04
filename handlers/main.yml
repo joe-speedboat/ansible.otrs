@@ -1,5 +1,5 @@
 ---
-# handlers file for joe_speedboat.otrs
+# handlers file for joe_speedboat.ansible_otrs
 
 - name: restart httpd
   service:
