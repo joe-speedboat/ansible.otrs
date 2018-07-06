@@ -1,5 +1,5 @@
 ---
-# defaults file for joe_speedboat.ansible_otrs
+# defaults file for joe-speedboat.ansible_otrs
 otrs_rpm_url: http://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.4-03.noarch.rpm
 
 # do not install and configure database

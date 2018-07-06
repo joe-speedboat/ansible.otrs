@@ -1,5 +1,5 @@
 ---
-# task file for joe_speedboat.ansible_otrs
+# task file for joe-speedboat.ansible_otrs
 
 - include: 'installation.yml'
 
