@@ -2,7 +2,7 @@
 - hosts: vm06
   become: yes
   roles:
-    - joe-speedboat.ansible_otrs
+    - uniQconsulting.otrs
   tasks:
   # - debug: var=mariadb_mysqld_config
   - name: install firewalld

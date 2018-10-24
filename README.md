@@ -15,7 +15,7 @@ check defaults/main.yml
 
 Dependencies
 ------------
-* role: joe_speedboat.ansible_mariadb if db install is selected.
+* role: uniQconsulting.mariadb if db install is selected.
 
 Example Playbook
 ----------------
