@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/uniQconsulting-ag/ansible.otrs.svg?branch=master)](https://travis-ci.org/uniQconsulting-ag/ansible.otrs)
+
 Role Name
 =========
 
