@@ -13,6 +13,7 @@ otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.4-03.noarch.rpm
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.5-01.noarch.rpm"
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.6-01.noarch.rpm"
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.7-01.noarch.rpm"
+otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.14-01.noarch.rpm"
 
 systemctl stop crond postfix httpd
 systemctl disable crond postfix httpd
