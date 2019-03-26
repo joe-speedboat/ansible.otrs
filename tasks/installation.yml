@@ -1,10 +1,10 @@
 ---
-# install.yml file for uniQconsulting.nextcloud
+# install.yml file for uniqconsulting.nextcloud
 - name: install database
   block:
   - name: Install MariaDB role and setup
     include_role:
-      name: uniQconsulting.mariadb
+      name: uniqconsulting.mariadb
     vars:
       mariadb_secure_installation: yes
       mariadb_databases:

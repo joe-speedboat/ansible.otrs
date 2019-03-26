@@ -2,7 +2,7 @@
 - hosts: vm05
   become: yes
   roles:
-    - uniQconsulting.otrs
+    - uniqconsulting.otrs
   vars:
     otrs_rpm_url: http://ftp.otrs.org/pub/otrs/RPMS/rhel/6/otrs-3.3.9-01.noarch.rpm
   tasks:

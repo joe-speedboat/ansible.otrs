@@ -4,8 +4,8 @@
   roles: 
     - role: role_under_test
   pre_tasks:
-  - name: install role dep uniQconsulting.mariadb
-    shell: ansible-galaxy install -p ./roles uniQconsulting.mariadb
+  - name: install role dep uniqconsulting.mariadb
+    shell: ansible-galaxy install -p ./roles uniqconsulting.mariadb
     changed_when: False
 
 ...

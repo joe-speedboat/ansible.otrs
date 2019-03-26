@@ -1,5 +1,5 @@
 ---
-# task file for uniQconsulting.otrs
+# task file for uniqconsulting.otrs
 
 - include: 'installation.yml'
 

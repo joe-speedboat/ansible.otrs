@@ -1,5 +1,5 @@
 ---
-# handlers file for uniQconsulting.otrs
+# handlers file for uniqconsulting.otrs
 
 - name: restart httpd
   service:
