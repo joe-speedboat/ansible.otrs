@@ -3,7 +3,7 @@
 # https://doc.otrs.com/doc/manual/admin/6.0/en/html/updating.html
 
 [root@otrs1 ~]# rpm -qa | grep otrs
-otrs-6.0.5-01.noarch
+   otrs-6.0.5-01.noarch
 
 screen -S upgrade
 
@@ -14,21 +14,15 @@ otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.5-01.noarch.rpm
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.6-01.noarch.rpm"
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.7-01.noarch.rpm"
 otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.14-01.noarch.rpm"
+otrs_rpm_url="https://ftp.otrs.org/pub/otrs/RPMS/rhel/7/otrs-6.0.19-02.noarch.rpm"
+# https://community.otrs.com/release-notes-otrs-6-patch-level-19/
 
 systemctl stop crond postfix httpd
 systemctl disable crond postfix httpd
 su - otrs -c 'cd /opt/otrs ; bin/Cron.sh stop'
 su - otrs -c 'cd /opt/otrs ; bin/otrs.Daemon.pl stop'
 
-mkdir -p /backup/5/cfg
-cd /opt/otrs
-cp -a Kernel/Config.pm Kernel/Config/Files/ZZZAuto.pm /backup/5/cfg/
-mysqldump otrs | gzip > /backup/5/otrs.mysql.gz
-tar cfz /backup/5/opt_otrs.tar.gz /opt/otrs
-ls -lah /backup/5/ /backup/5/cfg/
-
 yum -y install "$otrs_rpm_url"
-
 
 su - otrs -c 'cd /opt/otrs ; scripts/DBUpdate-to-6.pl'
 su - otrs -c 'cd /opt/otrs ; bin/otrs.Console.pl Admin::Package::UpgradeAll'
