@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Chris Ruettimann
-  company: uniQconsulting
+  company: uniqconsulting
   description: otrs installation and configuration
   role_name: otrs
   min_ansible_version: 2.4
