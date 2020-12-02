@@ -33,4 +33,3 @@ Example playbooks for this role are located in ´test´ folder:
 License
 --------------
 https://opensource.org/licenses/LGPL-3.0    
-Copyright (c) uniqconsulting.ag - Chris Ruettimann <cruettimann@uniqconsulting.ch>
